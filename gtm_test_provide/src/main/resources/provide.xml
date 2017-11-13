@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"  
+    xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"  
+    xmlns:task="http://www.springframework.org/schema/task" xmlns:util="http://www.springframework.org/schema/util"  
+    xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd  
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd  
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd  
+        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd  
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd  
+        http://code.alibabatech.com/schema/dubbo  
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">  
+    <!-- <context:component-scan base-package="com.picture">  
+        <context:exclude-filter type="annotation"  
+            expression="org.springframework.stereotype.Controller" />  
+    </context:component-scan>  --> 
+    
+    <!--<dubbo:annotation package="com.picture.serviceImpl" /> -->
+  
+    <dubbo:application name="provider" />  
+    <!-- Dubbo注册地址 -->  
+    <dubbo:registry protocol="zookeeper" address="${registry.address}" />
+    <dubbo:protocol name="dubbo" port="${dubbo.protocol.port}" threadpool="cached" threads="1000" accepts="2000" serialization="java"/>  
+       
+    <!-- <dubbo:service interface="com.picture.service.storage.IStorageService" ref="storageService" timeout="3000" ></dubbo:service>
+    <dubbo:service interface="com.picture.service.manage.IManageUserService" ref="manageUserService" timeout="3000" ></dubbo:service>  
+    <dubbo:service interface="com.picture.service.advert.IAdvertService" ref="advertService" timeout="3000" ></dubbo:service>  
+    <dubbo:service interface="com.picture.service.captcha.ICaptchaService" ref="captchaService" timeout="3000" ></dubbo:service>   -->
+   <!--  <dubbo:service interface="com.picture.service.warehouseprop.IPropValueSevice" ref="storageService" timeout="3000" ></dubbo:service>  
+    <dubbo:service interface="com.picture.service.warehouseprop.IWarehousePropService" ref="storageService" timeout="3000" ></dubbo:service>    -->
+
+    <dubbo:reference id ="memberDomain" interface="com.btjf.business.account.member.domain.MemberDomain" version="2.6.9.0" check="false"/>
+    <dubbo:reference id ="storeDomain" interface="com.btjf.business.store.domain.StoreDomain" version="3.1.0.3" check="false"/>
+
+    <dubbo:reference id ="carInfoDomain" interface="com.btjf.business.car.information.domain.CarInfoDomain" version="3.1.0.3" check="false"/>
+    <dubbo:reference id ="carSalesInfoDomain" interface="com.btjf.business.car.information.domain.CarSalesInfoDomain" version="3.1.0.3" check="false"/>
+
+    <dubbo:reference id ="carSpecialSubjectDomain" interface="com.btjf.business.car.specialsubject.domain.CarSpecialSubjectDomain" version="3.1.0.3" check="false"/>
+
+    <!--<dubbo:service interface="com.btjf.business.account.member.domain.MemberDomain" version="2.6.9.0" ref="memberRemoteDomain" validation="false" timeout="5000" retries="0"/>-->
+    <dubbo:reference id ="maxBillNoDomain" interface="com.btjf.business.billnogenerator.billno.domain.MaxBillNoDomain" version="2.6.9.0" check="false"/>
+    <dubbo:reference id="eventDefineDomain" interface="com.icar.finance.event.define.domain.EventDefineDomain" version="2.6.9.0" check="false"/>
+    <dubbo:reference id="eventExecuteLogDomain" interface="com.icar.finance.event.logger.domain.EventExecuteLogDomain" version="2.6.9.0" check="false"/>
+    <dubbo:reference id="eventDelayRuleDomain" interface="com.icar.finance.event.delayrule.domain.EventDelayRuleDomain" version="2.6.9.0" check="false"/>
+
+    <dubbo:reference id="customerInfoDomain" interface="com.btjf.business.card.clues.customer.domain.CustomerInfoDomain" version="2.9.0.6" check="false"/>
+    <dubbo:reference id="fixedPositionDomain" check="false" interface="com.btjf.thirdpart.openapi.fixedposition.domain.FixedPositionDomain" version="1.0"/>
+    <dubbo:reference id="privateCarInfoDomain" check="false" interface="com.btjf.business.car.information.domain.PrivateCarInfoDomain" version="3.1.0.3"/>
+
+    <dubbo:reference id="dynamicDomain" interface="com.btjf.business.dynamic.domain.DynamicDomain" version="3.1.0.3" check="false"/>
+
+    <dubbo:reference id="dbLoanDomain" interface="com.btjf.business.loan.xdb.domain.XdbLoanDomain" version="3.1.0.3" check="false"/>
+
+    <dubbo:reference id="logisticsDomain" interface="com.btjf.thirdpart.logistics.domain.LogisticsDomain" version="3.1.5.0" check="false"/>
+
+    <dubbo:service interface="com.btjf.business.freshcar.logistics.domain.LogisticsQueryDomain" version="3.3.6.0" ref="logisticsQueryRemoteDomain" validation="false" timeout="5000" retries="0"/>
+
+    <dubbo:service  interface="com.btjf.business.freshcar.certificate.domain.FreshCarCertificateDomain" version="3.1.2.0" ref="freshCarCertificateRemoteDomain" validation="false" timeout="5000" retries="0"/>
+</beans>
